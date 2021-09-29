@@ -37,6 +37,18 @@ RESOURCE_DOCKER_URL=$RESOUECE_URL"docker-18.09.6.tgz"
 # nginx 资源地址
 RESOURCE_NGINX_URL=$RESOUECE_URL"nginx-1.15.3.tar.gz"
 
+# helm 资源地址
+RESOURCE_HELM_URL=$RESOUECE_URL"helm-v3.7.0-linux-amd64.tar"
+
+# rancher 资源地址
+RESOURCE_RANCHER_URL=$RESOUECE_URL"rancher-2.4.16.tgz"
+
+# cert-manager 资源地址
+RESOURCE_CERT_MANAGER_URL=$RESOUECE_URL"cert-manager-v0.15.0.tgz"
+
+# cert-manager 资源地址
+RESOURCE_TRAEFIK_URL=$RESOUECE_URL"traefik-9.20.1.tgz"
+
 # soft 资源地址
 SOFT_URLS=(
 $RESOUECE_URL"kernel-lt-5.4.104-1.el7.elrepo.x86_64.rpm"
@@ -112,6 +124,10 @@ download_resource "${RESOURCE_FLANNEL_URL}"
 download_resource "${RESOURCE_ETCD_URL}"
 download_resource "${RESOURCE_DOCKER_URL}"
 download_resource "${RESOURCE_NGINX_URL}"
+download_resource "${RESOURCE_HELM_URL}"
+download_resource "${RESOURCE_RANCHER_URL}"
+download_resource "${RESOURCE_CERT_MANAGER_URL}"
+download_resource "${RESOURCE_TRAEFIK_URL}"
 
 # 检查 IP 地址
 fun_check_ip_address(){

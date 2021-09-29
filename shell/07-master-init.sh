@@ -1,8 +1,6 @@
 #!/bin/sh
 set -e
 ##集群搭建--初始化master 节点##
-##author julian##
-##date 2019-10-25##
 
 #获取当前执行脚本的目录
 

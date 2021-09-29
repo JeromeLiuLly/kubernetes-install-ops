@@ -13,7 +13,7 @@ source $DIRNAME/00-environment.sh
 function issue_docker(){
 	cd $K8S_WORK_DIR
 	source $K8S_BIN_DIR/environment.sh
-	tar -xvf docker-18.09.6.tgz
+	tar -xvf $DIRNAME/docker-18.09.6.tgz
 	
 	#分发二进制文件到所有 worker 节点：
 	for node_ip in ${WOKER_IPS[@]}

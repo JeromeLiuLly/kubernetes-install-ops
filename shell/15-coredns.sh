@@ -1,9 +1,6 @@
 #!/bin/sh
 set -e
 ##集群搭建--部署coredns插件##
-###需要在master节点上执行###
-##author julian##
-##date 2019-10-31##
 
 #获取当前执行脚本的目录
 

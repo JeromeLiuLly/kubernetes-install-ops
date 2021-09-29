@@ -126,3 +126,8 @@ sh -c "$(curl -fsSL https://saas-plus.oss-cn-shanghai.aliyuncs.com/aod/shell/ini
 16-nginx-test.sh
 
 17-node-role-label.sh
+
+###### 以下步骤按需操作
+18-node-role-label.sh
+
+19-node-role-label.sh

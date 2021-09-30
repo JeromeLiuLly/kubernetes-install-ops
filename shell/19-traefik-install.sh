@@ -345,7 +345,7 @@ service:
     # - 192.168.0.1/32
     # - 172.16.0.0/16
   externalIPs:
-    - 10.200.102.56
+    - 10.200.102.56 #需要修改
 
 ## Create HorizontalPodAutoscaler object.
 ##

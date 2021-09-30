@@ -51,7 +51,7 @@ function create_rancher() {
 cd $K8S_WORK_DIR
 cat > rancher.yml <<EOF
 replicas: 1
-hostname: "rancher.test.zolaq.net"
+hostname: "rancher.test.zolaq.net" #需要修改
 
 ingress:
   tls:

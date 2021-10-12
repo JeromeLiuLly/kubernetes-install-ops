@@ -36,6 +36,8 @@ service:
     dir: /data/k8s/k8s
     # (可选) k8s 工作 目录 默认值: /data/k8s/work
     work_dir: /data/k8s/work
+    # (可选) k8s 工作 目录 默认值: /data/k8s/work
+    log: /data/k8s/log
     # (可选) k8s bin 目录 目录 默认值: /usr/local/bin/
     bin_dir: /usr/local/bin/
     # (可选) k8s 数据父目录 默认值: /etc/kubernetes

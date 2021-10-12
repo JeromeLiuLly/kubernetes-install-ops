@@ -16,10 +16,6 @@ for node_ip in ${WOKER_IPS[@]}
     echo ">>> ${node_ip}"
     scp -P $SSH_PORT $K8S_WORK_DIR/kubernetes/server/bin/{kube-proxy,kubelet} root@${node_ip}:$K8S_BIN_DIR/
     ssh -p $SSH_PORT root@${node_ip} "chmod +x $K8S_BIN_DIR/*"
-	#吉野家的服务器上面已经装了
-    #ssh -p $SSH_PORT root@${node_ip} "yum install -y epel-release"
-	#system-init.sh 中好像已经装好了
-    #ssh -p $SSH_PORT root@${node_ip} "yum install -y conntrack ipvsadm ntp ntpdate ipset jq iptables curl sysstat libseccomp && modprobe ip_vs "
   done
 }
 

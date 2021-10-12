@@ -25,13 +25,16 @@ spec:
     port: 80
     targetPort: 80
 ---
-apiVersion: extensions/v1beta1
+apiVersion: app/v1
 kind: Deployment
 metadata:
   name: nginx-ds
   labels:
     addonmanager.kubernetes.io/mode: Reconcile
 spec:
+  selector:
+    matchLabels:
+      app: nginx-ds
   template:
     metadata:
       labels:
@@ -44,7 +47,7 @@ spec:
         - containerPort: 80
 EOF
 
-cat alpine.yml <<EOF
+cat > alpine.yml <<EOF
 apiVersion: v1
 kind: Pod
 metadata:
@@ -59,7 +62,7 @@ spec:
     - while true; do sleep 1; done
 EOF
 
-cat busybox.yml <<EOF
+cat > busybox.yml <<EOF
 apiVersion: v1
 kind: Pod
 metadata:
@@ -78,7 +81,7 @@ spec:
           command:
           - sh
           - -c
-          - for i in $(seq 50);do sleep 1;echo $i;done >> /etc/hosts
+          - for i in \$(seq 50);do sleep 1;echo $i;done >> /etc/hosts
     imagePullPolicy: IfNotPresent
     name: busybox
   restartPolicy: Always

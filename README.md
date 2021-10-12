@@ -81,7 +81,7 @@ service:
 # 一般情况下我们会选择 /data/k8s/work/ 作为我们的工作目录
 cd /data/k8s/work/
 # 注意：当前目录下必须存在 cluster.yml
-sh -c "$(curl -fsSL https://kubenetes-ops.oss-cn-shanghai.aliyuncs.com/kubenetes-1.15.12/shell/init.sh)" 
+sh -c "$(curl -fsSL https://kubenetes-ops.oss-cn-shanghai.aliyuncs.com/kubenetes-x.y.z/shell/init.sh)" 
 ```
 
 # 3.按步骤执行脚本

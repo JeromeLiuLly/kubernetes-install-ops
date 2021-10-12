@@ -90,16 +90,14 @@ function create_scheduler_config(){
 	cd $K8S_WORK_DIR
 	source $K8S_BIN_DIR/environment.sh
 	cat >kube-scheduler.yaml.template <<EOF
-apiVersion: kubescheduler.config.k8s.io/v1alpha1
+apiVersion: kubescheduler.config.k8s.io/v1beta1
 kind: KubeSchedulerConfiguration
-bindTimeoutSeconds: 600
 clientConnection:
   burst: 200
   kubeconfig: "$K8S_CERT_PARENT_DIR/kube-scheduler.kubeconfig"
   qps: 100
 enableContentionProfiling: false
 enableProfiling: true
-hardPodAffinitySymmetricWeight: 1
 healthzBindAddress: 0.0.0.0:10251
 leaderElection:
   leaderElect: true
@@ -136,17 +134,24 @@ WorkingDirectory=${K8S_DIR}/kube-scheduler
 ExecStart=$K8S_BIN_DIR/kube-scheduler \\
   --config=$K8S_CERT_PARENT_DIR/kube-scheduler.yaml \\
   --bind-address=0.0.0.0 \\
+  --leader-elect=true \\
+  --alsologtostderr=true \\
   --tls-cert-file=$K8S_CERT_DIR/kube-scheduler.pem \\
   --tls-private-key-file=$K8S_CERT_DIR/kube-scheduler-key.pem \\
   --authentication-kubeconfig=$K8S_CERT_PARENT_DIR/kube-scheduler.kubeconfig \\
+  --authorization-kubeconfig=$K8S_CERT_PARENT_DIR/kube-scheduler.kubeconfig \\
   --client-ca-file=$K8S_CERT_DIR/ca.pem \\
-  --requestheader-allowed-names="" \\
+  --requestheader-allowed-names= \\
   --requestheader-client-ca-file=$K8S_CERT_DIR/ca.pem \\
   --requestheader-extra-headers-prefix="X-Remote-Extra-" \\
   --requestheader-group-headers=X-Remote-Group \\
   --requestheader-username-headers=X-Remote-User \\
   --authorization-kubeconfig=$K8S_CERT_PARENT_DIR/kube-scheduler.kubeconfig \\
   --logtostderr=true \\
+  --log-dir=$K8S_LOG_DIR \\
+  --log-file=/var/log/kube-scheduler.log \\
+  --log-file-max-size=100 \\
+  --authentication-tolerate-lookup-failure=false \\
   --v=2
 Restart=always
 RestartSec=5

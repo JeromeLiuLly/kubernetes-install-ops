@@ -157,7 +157,7 @@ function colse_service(){
 
 ###12.创建相关目录
 function mdkir_work(){
-	mkdir -p  $K8S_WORK_DIR $K8S_BIN_DIR $K8S_CERT_DIR
+	mkdir -p  $K8S_WORK_DIR $K8S_BIN_DIR $K8S_CERT_DIR $K8S_LOG_DIR
 }
 
 ###13.升级内核

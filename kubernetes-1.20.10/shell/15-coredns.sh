@@ -17,12 +17,10 @@ function unzip_file(){
 function update_config(){
 	cd $K8S_WORK_DIR/kubernetes/cluster/addons/dns/coredns
 	cp coredns.yaml.base coredns.yaml
-	sed -i -e "s/__PILLAR__DNS__DOMAIN__/${CLUSTER_DNS_DOMAIN}/" -e "s/__PILLAR__DNS__SERVER__/${CLUSTER_DNS_SVC_IP}/" coredns.yaml
-	sed -i -e "s/__PILLAR__DNS__MEMORY__LIMIT__/200Mi/" coredns.yaml
+	sed -i -e "s/__DNS__DOMAIN__/${CLUSTER_DNS_DOMAIN}/" -e "s/__DNS__SERVER__/${CLUSTER_DNS_SVC_IP}/" coredns.yaml
+	sed -i -e "s/__DNS__MEMORY__LIMIT__/200Mi/" coredns.yaml
 	#修改镜像地址
 	sed -i "s/k8s.gcr.io/reg.can-dao.com\/library/" coredns.yaml
-	#设置node节点label为master03
-	#sed -i "s/beta.kubernetes.io\/os: linux/label-test: label-test/" coredns.yaml
 }
 
 ###3.拷贝coredns.yaml到指定目录

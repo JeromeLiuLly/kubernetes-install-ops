@@ -24,6 +24,7 @@ RESOURCE_YQ_URL=$RESOUECE_URL"yq"
 # KUBERNETES 资源地址
 RESOURCE_KUBERNETES_SERVER_URL=$RESOUECE_URL"kubernetes-server-linux-amd64.tar.gz"
 RESOURCE_KUBERNETES_CLIENT_URL=$RESOUECE_URL"kubernetes-client-linux-amd64.tar.gz"
+RESOURCE_KUBERNETES_NODE_URL=$RESOUECE_URL"kubernetes-node-linux-amd64.tar.gz"
 
 # flannel 资源地址
 RESOURCE_FLANNEL_URL=$RESOUECE_URL"flannel-v0.11.0-linux-amd64.tar.gz"
@@ -47,7 +48,7 @@ RESOURCE_RANCHER_URL=$RESOUECE_URL"rancher-2.5.9.tgz"
 RESOURCE_CERT_MANAGER_URL=$RESOUECE_URL"cert-manager-v0.15.0.tgz"
 
 # cert-manager 资源地址
-RESOURCE_TRAEFIK_URL=$RESOUECE_URL"traefik-9.20.1.tgz"
+RESOURCE_TRAEFIK_URL=$RESOUECE_URL"traefik-10.3.6.tgz"
 
 # soft 资源地址
 SOFT_URLS=(
@@ -80,6 +81,8 @@ $RESOUECE_URL"shell/14-kube-proxy.sh"
 $RESOUECE_URL"shell/15-coredns.sh"
 $RESOUECE_URL"shell/16-nginx-test.sh"
 $RESOUECE_URL"shell/17-node-role-label.sh"
+$RESOUECE_URL"shell/18-rancher-install.sh"
+$RESOUECE_URL"shell/19-traefik-install.sh"
 )
 
 download_resource(){
@@ -95,7 +98,7 @@ download_resource(){
           local_file_length=$(ls -l "$RESOURCE_FILENAME" | awk '{print $5}')
           server_file_length=$(curl -sI "$RESOURCE_URL" | grep -i Content-Length | awk '{print $2}' | sed 's/\r//')
           if [ $local_file_length -eq $server_file_length ];then
-              echo "${RESOURCE_FILENAME}已经存在"
+              echo "${RESOURCE_FILENAME},已经存在"
               return
           fi
       fi
@@ -120,6 +123,7 @@ fi
 # 下载需要的包
 download_resource "${RESOURCE_KUBERNETES_SERVER_URL}"
 download_resource "${RESOURCE_KUBERNETES_CLIENT_URL}"
+download_resource "${RESOURCE_KUBERNETES_NODE_URL}"
 download_resource "${RESOURCE_FLANNEL_URL}"
 download_resource "${RESOURCE_ETCD_URL}"
 download_resource "${RESOURCE_DOCKER_URL}"
@@ -161,6 +165,8 @@ base_cert_date=$(yq eval ".base.cert_date // \"87600h\"" ${cluster_yaml})
 
 # (可选) k8s 各组件数据 目录 默认值: /data/k8s/k8s
 service_k8s_dir=$(yq eval ".service.k8s.dir // \"/data/k8s/k8s\"" ${cluster_yaml})
+# (可选) k8s 各组件数据 目录 默认值: /data/k8s/log
+service_k8s_log=$(yq eval ".service.k8s.log // \"/data/k8s/log\"" ${cluster_yaml})
 # (可选) k8s 工作 目录 默认值: /data/k8s/work
 service_k8s_work_dir=$(yq eval ".service.k8s.work_dir // \"/data/k8s/work\"" ${cluster_yaml})
 # (可选) k8s bin 目录 目录 默认值: /usr/local/bin/
@@ -505,6 +511,9 @@ export ETCD_WAL_DIR="${service_etcd_wal_dir}"
 
 # k8s 各组件数据 目录
 export K8S_DIR="${service_k8s_dir}"
+
+# k8s 各组件数据 目录
+export K8S_LOG_DIR="${service_k8s_log}"
 
 # k8s 工作 目录
 export K8S_WORK_DIR="${service_k8s_work_dir}"

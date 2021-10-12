@@ -20,7 +20,7 @@ function issue_kubernetes(){
 	for node_ip in ${MASTER_IPS[@]}
 	  do
 		echo ">>> ${node_ip}"
-		scp -P $SSH_PORT $K8S_WORK_DIR/kubernetes/server/bin/{apiextensions-apiserver,cloud-controller-manager,kube-apiserver,kube-controller-manager,kube-proxy,kube-scheduler,kubeadm,kubectl,kubelet,mounter} root@${node_ip}:$K8S_BIN_DIR/
+		scp -P $SSH_PORT $K8S_WORK_DIR/kubernetes/server/bin/{apiextensions-apiserver,kube-apiserver,kube-controller-manager,kube-proxy,kube-scheduler,kubeadm,kubectl,kubelet,mounter} root@${node_ip}:$K8S_BIN_DIR/
 		ssh -p $SSH_PORT root@${node_ip} "chmod +x $K8S_BIN_DIR/*"
 	  done
 }

@@ -143,6 +143,48 @@ kubeReservedCgroup: ""
 enforceNodeAllocatable: ["pods"]
 EOF
 
+## enableServer: 启动kubelet的http rest server，这个server提供了获取本地节点运行的pod列表、状态以及其他监控相关的rest接口，默认true。
+## staticPodPath: 静态pod目录
+## syncFrequency: 同步运行中容器的配置的频率,默认1m
+## fileCheckFrequency: 检查静态Pod的时间间隔,默认20s
+## address: 监听地址，默认0.0.0.0
+## port: 监听端口，默认10250
+## readOnlyPort: 一个提供只读服务的端口，0为禁用。
+## rotateCertificates: 启用客户端证书轮换。 Kubelet将从certificates.k8s.io API请求新证书。
+## serverTLSBootstrap: 启用服务器证书引导。 从certificates.k8s.io API请求证书，需要批准者批准证书签名请求。这必须启用RotateKubeletServerCertificate特性，默认是启用的。
+## authentication: kubelet对客户端的认证方式
+
+## anonymous: 匿名认证
+## webhook: webhook认证方式
+## cacheTTL : 认证结果缓存
+## x509: x509证书认证
+## clientCAFile: 请求kubelet服务端的客户端，这里指定给客户端证书签发的CA机构
+## authorization: kubelet对客户端的授权方式
+#    mode: 应用于kubelet服务器请求的授权模式。有效值是AlwaysAllow和Webhook。Webhook模式使用SubjectAccessReview API来确定授权。
+## healthzPort: healthz接口的监听端口
+## healthzBindAddress: healthz接口的监听地址
+## clusterDomain: 此集群的DNS域
+## clusterDNS: 一个DNS列表，kubelet将配置所有容器使用此DNS解析，而不是主机的DNS服务器。
+## nodeStatusUpdateFrequency : kubelet将节点状态信息上报到apiserver的频率，默认：10s
+## nodeStatusReportFrequency: kubelet节点状态不变时将节点状态上报到apiserver的频率。默认：1m
+## imageMinimumGCAge: 镜像垃圾回收时，清理多久没有被使用的镜像，默认2m。即2分钟内没有被使用过的镜像会被清理。
+## imageGCHighThresholdPercent: 设置镜像垃圾回收的阈值(磁盘空间百分比)，默认85。高于此值会触发垃圾回收。
+## imageGCLowThresholdPercent: 设置停止镜像垃圾回收的阈值(磁盘空间百分比)，默认80。低于此值会停止垃圾回收。
+## volumeStatsAggPeriod: 计算和缓存所有Pod的卷磁盘使用情况的频率，默认1m
+## cgroupDriver: kubelet用来操纵cgroups的驱动程序（cgroupfs或systemd）
+## runtimeRequestTimeout: 所有runtime请求的超时时间，除了长时间运行的请求如pull、logs、exec 和 attach。默认2m
+## maxPods: 控制kubelet可以运行的pod数量。默认110
+## kubeAPIQPS: 与apiserver通信的qps,默认5
+## kubeAPIBurst: 与apiserver通信时的并发数,默认10
+## serializeImagePulls: 默认true，一个一个按顺序拉镜像，docker大于1.9，并且不是使用aufs存储驱动的建议改成false
+## evictionHard: 设置硬驱逐pod的阈值.https://kubernetes.io/zh/docs/tasks/administer-cluster/out-of-resource/ 默认如下:
+#    memory.available: "100Mi" # 可用内存不足100Mi会采用硬驱逐pod
+#    nodefs.available: "10%" # nodefs空间不足10%会采用硬驱逐pod
+#    nodefs.inodesFree: "5%" # inodes不足5%会采用硬驱逐pod
+#    imagefs.available: "15%" # imagefs空间不足15%会采用硬驱逐pod
+## containerLogMaxSize: 容器日志轮换大小，满足指定大小会轮换，默认10Mi
+## containerLogMaxFiles: 容器日志轮换保留的最大个数，默认5个
+
 #为各节点创建和分发 kubelet 配置文件：
 for node_ip in ${WOKER_IPS[@]}
   do 
@@ -178,6 +220,11 @@ ExecStart=$K8S_BIN_DIR/kubelet \\
   --config=$K8S_CERT_PARENT_DIR/kubelet-config.yaml \\
   --hostname-override=##NODE_NAME## \\
   --pod-infra-container-image=harbor.can-dao.com/images_k8s/pause-amd64:3.1 \\
+  --alsologtostderr=true \\
+  --logtostderr=false \\
+  --log-dir=$K8S_LOG_DIR \\
+  --log-file=/var/log/kubelet.log \\
+  --log-file-max-size=100 \\
   --image-pull-progress-deadline=15m \\
   --volume-plugin-dir=${K8S_DIR}/kubelet/kubelet-plugins/volume/exec/ \\
   --logtostderr=true \\
@@ -231,6 +278,7 @@ function auto_approve_csr(){
 	cd $K8S_WORK_DIR
 	cat > csr-crb.yaml <<EOF
  # Approve all CSRs for the group "system:bootstrappers"
+ # 自动批准"system:bootstrappers"组的所有CSR
  kind: ClusterRoleBinding
  apiVersion: rbac.authorization.k8s.io/v1
  metadata:
@@ -245,6 +293,7 @@ function auto_approve_csr(){
    apiGroup: rbac.authorization.k8s.io
 ---
  # To let a node of the group "system:nodes" renew its own credentials
+ # 自动批准"system:nodes"组的CSR续约请求
  kind: ClusterRoleBinding
  apiVersion: rbac.authorization.k8s.io/v1
  metadata:

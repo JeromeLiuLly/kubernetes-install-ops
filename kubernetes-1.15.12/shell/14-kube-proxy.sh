@@ -147,6 +147,7 @@ for node_ip in ${WOKER_IPS[@]}
   do
     echo ">>> ${node_ip}"
     ssh -p $SSH_PORT root@${node_ip} "mkdir -p ${K8S_DIR}/kube-proxy"
+    # 开启 ipvs（临时生效）
     ssh -p $SSH_PORT root@${node_ip} "modprobe ip_vs_rr"
     ssh -p $SSH_PORT root@${node_ip} "systemctl daemon-reload && systemctl enable kube-proxy && systemctl restart kube-proxy"
   done

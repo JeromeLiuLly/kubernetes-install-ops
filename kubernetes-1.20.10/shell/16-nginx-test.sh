@@ -25,7 +25,7 @@ spec:
     port: 80
     targetPort: 80
 ---
-apiVersion: app/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-ds
@@ -106,7 +106,8 @@ set -e
 		echo "===未查询到nginx-svc ，尝试重新查询$COUNT==="
 		ClusterIP=$(kubectl get svc | grep nginx-ds | awk '{print $3}')
 	done
-
+echo "睡眠5s"
+sleep 5
 curl ClusterIP
 echo "若服务正常，请测试其端口以及局域网ip是否可以互相ping通"
 }

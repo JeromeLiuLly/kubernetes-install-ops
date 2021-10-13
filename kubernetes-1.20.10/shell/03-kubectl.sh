@@ -10,7 +10,7 @@ source $DIRNAME/00-environment.sh
 ###1.分发kubectl二进制文件
 function issue_kubectl(){
 	cd $K8S_WORK_DIR
-	tar -xzvf $DIRNAME/kubernetes-client-linux-amd64.tar.gz
+	tar -xzvf $DIRNAME/kubernetes-node-linux-amd64.tar.gz
 
 	source $K8S_BIN_DIR/environment.sh
 	for node_ip in ${NODE_IPS[@]}

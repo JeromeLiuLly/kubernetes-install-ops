@@ -113,6 +113,8 @@ function check_service(){
 ###6.检查 docker0 网桥
 function check_network(){
 	 source $K8S_BIN_DIR/environment.sh
+	echo "等待5s"
+	sleep 5
 	for node_ip in ${WOKER_IPS[@]}
 	  do
 		echo ">>> ${node_ip}"

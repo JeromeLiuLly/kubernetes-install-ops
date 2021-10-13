@@ -371,16 +371,15 @@ ExecStart=$K8S_BIN_DIR/kube-apiserver \\
   --enable-aggregator-routing=true \\
   --anonymous-auth=false \\
   --encryption-provider-config=$K8S_CERT_PARENT_DIR/encryption-config.yaml \\
-  --enable-admission-plugins=DefaultStorageClass,DefaultTolerationSeconds,LimitRanger,NamespaceExists,NamespaceLifecycle,NodeRestriction,PodNodeSelector,PersistentVolumeClaimResize,PodPreset,PodTolerationRestriction,ResourceQuota,ServiceAccount,StorageObjectInUseProtection,MutatingAdmissionWebhook,ValidatingAdmissionWebhook \\
+  --enable-admission-plugins=DefaultStorageClass,DefaultTolerationSeconds,LimitRanger,NamespaceExists,NamespaceLifecycle,NodeRestriction,PodNodeSelector,PersistentVolumeClaimResize,PodTolerationRestriction,ResourceQuota,ServiceAccount,StorageObjectInUseProtection,MutatingAdmissionWebhook,ValidatingAdmissionWebhook \\
   --disable-admission-plugins=DenyEscalatingExec,ExtendedResourceToleration,ImagePolicyWebhook,LimitPodHardAntiAffinityTopology,NamespaceAutoProvision,Priority,EventRateLimit,PodSecurityPolicy \\
   --cors-allowed-origins=.* \\
   --enable-swagger-ui \\
-  --runtime-config=api/all=true,settings.k8s.io/v1alpha1=true \\
+  --runtime-config=api/all=true \\
   --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname \\
   --authorization-mode=Node,RBAC \\
   --allow-privileged=true \\
   --apiserver-count=3 \\
-  --audit-dynamic-configuration \\
   --audit-log-maxage=15 \\
   --audit-log-maxbackup=3 \\
   --audit-log-maxsize=100 \\

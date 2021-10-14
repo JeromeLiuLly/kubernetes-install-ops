@@ -16,7 +16,8 @@ if [ ! -f "$cluster_yaml" ]; then
 fi
 
 # 全局域名
-RESOUECE_URL="https://kubenetes-ops.oss-cn-shanghai.aliyuncs.com/kubenetes-1.15.12/"
+RESOUECE_URL="https://kubernetes-ops.oss-cn-shanghai.aliyuncs.com/kubenetes-1.15.12/"
+COMMON_RESOUECE_URL="https://kubernetes-ops.oss-cn-shanghai.aliyuncs.com/common-package/"
 
 # yq 资源地址
 RESOURCE_YQ_URL=$RESOUECE_URL"yq"
@@ -26,36 +27,36 @@ RESOURCE_KUBERNETES_SERVER_URL=$RESOUECE_URL"kubernetes-server-linux-amd64.tar.g
 RESOURCE_KUBERNETES_CLIENT_URL=$RESOUECE_URL"kubernetes-client-linux-amd64.tar.gz"
 
 # flannel 资源地址
-RESOURCE_FLANNEL_URL=$RESOUECE_URL"flannel-v0.11.0-linux-amd64.tar.gz"
+RESOURCE_FLANNEL_URL=$COMMON_RESOUECE_URL"flannel-v0.11.0-linux-amd64.tar.gz"
 
 # etcd 资源地址
-RESOURCE_ETCD_URL=$RESOUECE_URL"etcd-v3.3.13-linux-amd64.tar.gz"
+RESOURCE_ETCD_URL=$COMMON_RESOUECE_URL"etcd-v3.3.13-linux-amd64.tar.gz"
 
 # docker 资源地址
-RESOURCE_DOCKER_URL=$RESOUECE_URL"docker-18.09.6.tgz"
+RESOURCE_DOCKER_URL=$COMMON_RESOUECE_URL"docker-18.09.6.tgz"
 
 # nginx 资源地址
-RESOURCE_NGINX_URL=$RESOUECE_URL"nginx-1.15.3.tar.gz"
+RESOURCE_NGINX_URL=$COMMON_RESOUECE_URL"nginx-1.15.3.tar.gz"
 
 # helm 资源地址
-RESOURCE_HELM_URL=$RESOUECE_URL"helm-v3.7.0-linux-amd64.tar"
+RESOURCE_HELM_URL=$COMMON_RESOUECE_URL"helm-v3.7.0-linux-amd64.tar"
 
 # rancher 资源地址
 RESOURCE_RANCHER_URL=$RESOUECE_URL"rancher-2.4.16.tgz"
 
 # cert-manager 资源地址
-RESOURCE_CERT_MANAGER_URL=$RESOUECE_URL"cert-manager-v0.15.0.tgz"
+RESOURCE_CERT_MANAGER_URL=$COMMON_RESOUECE_URL"cert-manager-v0.15.0.tgz"
 
 # cert-manager 资源地址
 RESOURCE_TRAEFIK_URL=$RESOUECE_URL"traefik-9.20.1.tgz"
 
 # soft 资源地址
 SOFT_URLS=(
-$RESOUECE_URL"kernel-lt-5.4.104-1.el7.elrepo.x86_64.rpm"
-$RESOUECE_URL"kernel-lt-devel-5.4.104-1.el7.elrepo.x86_64.rpm"
-$RESOUECE_URL"cfssl-certinfo_linux-amd64"
-$RESOUECE_URL"cfssljson_linux-amd64"
-$RESOUECE_URL"cfssl_linux-amd64"
+$COMMON_RESOUECE_URL"kernel-lt-5.4.104-1.el7.elrepo.x86_64.rpm"
+$COMMON_RESOUECE_URL"kernel-lt-devel-5.4.104-1.el7.elrepo.x86_64.rpm"
+$COMMON_RESOUECE_URL"cfssl-certinfo_linux-amd64"
+$COMMON_RESOUECE_URL"cfssljson_linux-amd64"
+$COMMON_RESOUECE_URL"cfssl_linux-amd64"
 )
 
 # shell 资源地址

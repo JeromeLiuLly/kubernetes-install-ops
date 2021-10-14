@@ -21,6 +21,7 @@ function issue_traefik(){
 	  done
 }
 
+## https://github.com/traefik/traefik-helm-chart
 function create_traefik(){
 cd $K8S_WORK_DIR
 cat > traefik.yml <<EOF

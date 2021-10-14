@@ -47,11 +47,16 @@ function check_cert_manager(){
 	kubectl get pods --namespace cert-manager
 }
 
+## 需要手动生成证书
+function creack_secret(){
+  kubectl create secret tls k8s.rancher.zolaq.net --cert=rancher.pem  --key=rancher.key  -n cattle-system
+}
+
 function create_rancher() {
 cd $K8S_WORK_DIR
 cat > rancher.yml <<EOF
 replicas: 1
-hostname: "rancher.test.zolaq.net" #需要修改
+hostname: "k8s.rancher.zolaq.net" #需要修改
 
 ingress:
   tls:
@@ -66,7 +71,7 @@ EOF
 ###5.执行rancher
 function exec_rancher_install() {
   cd $K8S_WORK_DIR
-  helm upgrade -i  rancher $DIRNAME/rancher-2.4.16.tgz -f rancher.yml --namespace cattle-system
+  helm upgrade -i  rancher $DIRNAME/rancher-2.5.9.tgz -f rancher.yml --namespace cattle-system
 }
 
 ###6.检查启动结果

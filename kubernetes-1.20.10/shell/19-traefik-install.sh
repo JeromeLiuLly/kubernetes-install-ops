@@ -457,7 +457,7 @@ function create_namespace(){
 ###3. 执行traefik
 function exec_traefik() {
   cd $K8S_WORK_DIR
-  helm upgrade -i -f traefik.yml traefik $DIRNAME/traefik-9.20.1.tgz -n traefik
+  helm upgrade -i -f traefik.yml traefik $DIRNAME/traefik-10.3.6.tgz -n traefik
 }
 
 ###4.检查启动结果
@@ -480,7 +480,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`traefik.test.zolaq.net`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+    - match: Host(\`k8s.traefik.zolaq.net\`) && (PathPrefix(\`/dashboard\`) || PathPrefix(\`/api\`))
       kind: Rule
       services:
         - name: api@internal
@@ -497,7 +497,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`rancher.test.zolaq.net`)
+    - match: Host(\`k8s.rancher.zolaq.net\`)
       kind: Rule
       services:
         - name: rancher
@@ -513,6 +513,7 @@ function main(){
 	create_namespace
 	exec_traefik
 	check_traefik
+	create_rancher_ingress
 	echo "=====success====="
 }
 main "$@"
